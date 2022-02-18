@@ -1,20 +1,25 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+
+import axios from "axios";
 
 const Register = () => {
+  const [regSuccess, setRegSuccess] = useState(false);
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isLoggedIn) {
+      return navigate("/");
+    }
+    if (regSuccess) {
       return navigate("/login");
     }
-  }, []);
+  }, [isLoggedIn, regSuccess]);
 
   const [formError, setFormError] = useState({
     passwordError: "",
@@ -33,7 +38,26 @@ const Register = () => {
     };
     const isValid = checkValidation(formData);
     if (isValid) {
-      console.log(formData);
+      registerUser(formData);
+    }
+  };
+
+  const registerUser = async (formData) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:8000/api/auth/register",
+        formData,
+        config
+      );
+      window.alert(data.msg);
+      setRegSuccess(true);
+    } catch (error) {
+      window.alert(error.response.data.msg);
     }
   };
 

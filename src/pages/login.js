@@ -38,7 +38,6 @@ const Login = () => {
       setIsLoggedIn(true);
     } catch (error) {
       window.alert(error.response.data.msg);
-      window.location.reload();
     }
   };
 
