@@ -4,25 +4,42 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-  const { userToken } = useContext(Context);
+  const { isLoggedIn, setIsLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userToken) {
+    if (isLoggedIn) {
       return navigate("/");
     }
-  }, []);
+  }, [isLoggedIn]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const formData = {
       email: data.get("email"),
       password: data.get("password"),
     };
-    console.log(formData);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "http://localhost:8000/api/auth/login",
+        formData,
+        config
+      );
+      localStorage.setItem("userToken", data.token);
+      setIsLoggedIn(true);
+    } catch (error) {
+      window.alert(error.response.data.msg);
+      window.location.reload();
+    }
   };
 
   return (

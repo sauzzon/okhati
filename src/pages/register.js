@@ -7,11 +7,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Register = () => {
-  const { userToken } = useContext(Context);
+  const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userToken) {
+    if (isLoggedIn) {
       return navigate("/login");
     }
   }, []);

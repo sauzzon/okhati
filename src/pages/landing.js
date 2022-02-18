@@ -4,12 +4,13 @@ import { useContext } from "react";
 import { Context } from "../context/Context";
 
 const Landing = () => {
-  const { userToken } = useContext(Context);
+  const { isLoggedIn } = useContext(Context);
 
   return (
     <center>
+      {isLoggedIn && <h1>Welcome to </h1>}
       <h1>Okhati Solutions</h1>
-      {userToken ? (
+      {isLoggedIn ? (
         <Button
           component={Link}
           to="/dashboard"

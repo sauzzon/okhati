@@ -2,14 +2,13 @@ import React, { useState } from "react";
 export const Context = React.createContext();
 
 export const ContextProvider = ({ children }) => {
-  const token = localStorage.getItem("userToken")
-    ? JSON.parse(localStorage.getItem("userToken"))
-    : null;
-  const [userToken, setUserToken] = useState(token);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Context.Provider
       value={{
-        userToken,
+        isLoggedIn,
+        setIsLoggedIn,
       }}
     >
       {children}

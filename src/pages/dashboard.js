@@ -3,11 +3,11 @@ import { useEffect, useContext } from "react";
 import { Context } from "../context/Context";
 
 const Dashboard = () => {
-  const { userToken } = useContext(Context);
+  const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userToken) {
+    if (!isLoggedIn) {
       return navigate("/login");
     }
   }, []);
