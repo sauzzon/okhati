@@ -1,9 +1,20 @@
+import { useEffect, useContext } from "react";
+import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { userToken } = useContext(Context);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userToken) {
+      return navigate("/");
+    }
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

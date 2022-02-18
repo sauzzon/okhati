@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import Login from "./login";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { Context } from "../context/Context";
 
 const Dashboard = () => {
-  const [token, setToken] = useState(false);
-  if (!token) {
-    return <Login></Login>;
-  }
+  const { userToken } = useContext(Context);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userToken) {
+      return navigate("/login");
+    }
+  }, []);
+
   return (
     <center>
       <h2>Hello User</h2>

@@ -1,13 +1,15 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 const Landing = () => {
-  const [token, setToken] = useState(false);
+  const { userToken } = useContext(Context);
+
   return (
     <center>
       <h1>Okhati Solutions</h1>
-      {token ? (
+      {userToken ? (
         <Button
           component={Link}
           to="/dashboard"
