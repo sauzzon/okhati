@@ -4,7 +4,15 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const handleSubmit = () => {};
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const formData = {
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    console.log(formData);
+  };
 
   return (
     <center>

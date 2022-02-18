@@ -2,9 +2,57 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Register = () => {
-  const handleSubmit = () => {};
+  const [formError, setFormError] = useState({
+    passwordError: "",
+    cpasswordError: "",
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const formData = {
+      name: data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+      password: data.get("password"),
+      cpassword: data.get("cpassword"),
+    };
+    const isValid = checkValidation(formData);
+    if (isValid) {
+      console.log(formData);
+    }
+  };
+
+  const checkValidation = (formData) => {
+    let errorFree = true;
+    const tempError = {
+      passwordError: "",
+      cpasswordError: "",
+    };
+
+    if (
+      formData.password.length < 8 ||
+      !/\d/.test(formData.password) ||
+      !/[a-zA-Z]/.test(formData.password)
+    ) {
+      errorFree = false;
+      tempError.passwordError =
+        "At least 8 character long and include at least a number and an alphabet";
+    }
+
+    if (formData.password !== formData.cpassword) {
+      errorFree = false;
+      tempError.cpasswordError = "Password doesn't match";
+    }
+    setFormError({
+      ...formError,
+      ...tempError,
+    });
+    return errorFree;
+  };
 
   return (
     <center>
@@ -16,7 +64,7 @@ const Register = () => {
           id="name"
           label="Name"
           name="name"
-        />{" "}
+        />
         <br></br>
         <TextField
           margin="normal"
@@ -42,6 +90,8 @@ const Register = () => {
           id="password"
           label="Password"
           name="password"
+          error={Boolean(formError.passwordError)}
+          helperText={formError.passwordError}
         />
         <br></br>
         <TextField
@@ -51,6 +101,8 @@ const Register = () => {
           id="cpassword"
           label="Confirm Password"
           name="cpassword"
+          error={Boolean(formError.cpasswordError)}
+          helperText={formError.cpasswordError}
         />
         <br></br>
         <Button type="submit" variant="outlined">
