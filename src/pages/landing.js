@@ -27,7 +27,7 @@ const Landing = () => {
             : "Lets Get Connected"}
         </h4>
         <center>
-          {!isLoggedIn ? (
+          {isLoggedIn ? (
             <Button
               sx={{ m: 2 }}
               component={Link}

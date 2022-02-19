@@ -2,9 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import axios from "axios";
-import { Paper } from "@mui/material";
-
-import Logout from "./logout";
+import { Paper, Button } from "@mui/material";
 import AppButtonBar from "./appbar";
 
 const Dashboard = () => {
@@ -51,12 +49,15 @@ const Dashboard = () => {
           margin: "80px auto",
         }}
       >
-        <center>
-          <h2>Dashboard</h2>
-        </center>
         <h3>Welcome, {userDetails.name}</h3>
-        <h4>Email: {userDetails.email}</h4>
-        <h4>Phone Number: {userDetails.phone}</h4>
+        <h4>Your Email: {userDetails.email}</h4>
+        <h4>Your Phone Number: {userDetails.phone}</h4>
+        <Button sx={{ m: 2 }} variant="contained" color="success">
+          View Calender
+        </Button>
+        <Button sx={{ m: 2 }} variant="contained" color="success">
+          Search Doctors
+        </Button>
       </Paper>
     </>
   );
