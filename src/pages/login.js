@@ -86,7 +86,7 @@ const Login = () => {
                 label="Email Address"
                 name="email"
               />
-              <br></br>
+
               <TextField
                 margin="normal"
                 fullWidth
@@ -96,7 +96,7 @@ const Login = () => {
                 label="Password"
                 name="password"
               />
-              <br></br>
+
               <center>
                 <Button
                   sx={{ m: 1 }}
