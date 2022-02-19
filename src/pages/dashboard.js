@@ -31,10 +31,7 @@ const Dashboard = () => {
           authorization: `Bearer ${token}`,
         },
       };
-      const userDetails = await axios.get(
-        "http://localhost:8000/api/users/dashboard",
-        config
-      );
+      const userDetails = await axios.get("/users/dashboard", config);
       setLoading(false);
       setUserDetails(userDetails.data.user);
     } catch (error) {

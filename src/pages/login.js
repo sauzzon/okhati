@@ -34,11 +34,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "http://localhost:8000/api/auth/login",
-        formData,
-        config
-      );
+      const { data } = await axios.post("/auth/login", formData, config);
       localStorage.setItem("userToken", data.token);
       setLoading(false);
       setNotification({ type: "success", msg: "Login Successful" });

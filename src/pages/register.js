@@ -52,11 +52,7 @@ const Register = () => {
           "Content-Type": "application/json",
         },
       };
-      const { data } = await axios.post(
-        "http://localhost:8000/api/auth/register",
-        formData,
-        config
-      );
+      const { data } = await axios.post("/auth/register", formData, config);
       setLoading(false);
       setNotification({ type: "success", msg: data.msg });
       setRegSuccess(true);
