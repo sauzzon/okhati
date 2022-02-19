@@ -2,13 +2,14 @@ import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button, Paper } from "@mui/material";
+import { Button, Paper, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonAppBar from "./appbar";
 
 import axios from "axios";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
   const [regSuccess, setRegSuccess] = useState(false);
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Register = () => {
     };
     const isValid = checkValidation(formData);
     if (isValid) {
+      setLoading(true);
       registerUser(formData);
     }
   };
@@ -55,9 +57,11 @@ const Register = () => {
         formData,
         config
       );
+      setLoading(false);
       window.alert(data.msg);
       setRegSuccess(true);
     } catch (error) {
+      setLoading(false);
       window.alert(error.response.data.msg);
     }
   };
@@ -93,85 +97,91 @@ const Register = () => {
   return (
     <>
       <ButtonAppBar></ButtonAppBar>
-      <>
-        <Paper
-          elevation={10}
-          style={{
-            padding: 20,
-            height: "80vh",
-            width: "35vw",
-            margin: "20px auto",
-          }}
-        >
-          <center>
-            <h2>Register with Us</h2>
-          </center>
-          <Box component="form" onSubmit={handleSubmit}>
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              id="name"
-              label="Name"
-              name="name"
-            />
-
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              type="email"
-              id="email"
-              label="Email Address"
-              name="email"
-            />
-
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              id="phone"
-              label="Phone Number"
-              name="phone"
-            />
-
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              type="password"
-              id="password"
-              label="Password"
-              name="password"
-              error={Boolean(formError.passwordError)}
-              helperText={formError.passwordError}
-            />
-
-            <TextField
-              margin="normal"
-              fullWidth
-              required
-              type="password"
-              id="cpassword"
-              label="Confirm Password"
-              name="cpassword"
-              error={Boolean(formError.cpasswordError)}
-              helperText={formError.cpasswordError}
-            />
-
+      {loading ? (
+        <CircularProgress
+          sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
+        />
+      ) : (
+        <>
+          <Paper
+            elevation={10}
+            style={{
+              padding: 20,
+              height: "80vh",
+              width: "35vw",
+              margin: "20px auto",
+            }}
+          >
             <center>
-              <Button
-                sx={{ m: 1 }}
-                type="submit"
-                variant="contained"
-                color="success"
-              >
-                Register
-              </Button>
+              <h2>Register with Us</h2>
             </center>
-          </Box>
-        </Paper>
-      </>
+            <Box component="form" onSubmit={handleSubmit}>
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                id="name"
+                label="Name"
+                name="name"
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                type="email"
+                id="email"
+                label="Email Address"
+                name="email"
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                id="phone"
+                label="Phone Number"
+                name="phone"
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                type="password"
+                id="password"
+                label="Password"
+                name="password"
+                error={Boolean(formError.passwordError)}
+                helperText={formError.passwordError}
+              />
+
+              <TextField
+                margin="normal"
+                fullWidth
+                required
+                type="password"
+                id="cpassword"
+                label="Confirm Password"
+                name="cpassword"
+                error={Boolean(formError.cpasswordError)}
+                helperText={formError.cpasswordError}
+              />
+
+              <center>
+                <Button
+                  sx={{ m: 1 }}
+                  type="submit"
+                  variant="contained"
+                  color="success"
+                >
+                  Register
+                </Button>
+              </center>
+            </Box>
+          </Paper>
+        </>
+      )}
     </>
   );
 };

@@ -2,10 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import axios from "axios";
-import { Paper, Button } from "@mui/material";
+import { Paper, Button, CircularProgress } from "@mui/material";
 import AppButtonBar from "./appbar";
 
 const Dashboard = () => {
+  const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({});
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Dashboard = () => {
     if (isLoggedIn) {
       return navigate("/login");
     } else {
+      setLoading(true);
       getUserDetails();
     }
   }, [isLoggedIn]);
@@ -31,34 +33,41 @@ const Dashboard = () => {
         "http://localhost:8000/api/users/dashboard",
         config
       );
+      setLoading(false);
       setUserDetails(userDetails.data.user);
     } catch (error) {
-      console.log(error.response.data.msg);
+      window.alert(error.response.data.msg);
     }
   };
 
   return (
     <>
       <AppButtonBar></AppButtonBar>
-      <Paper
-        elevation={10}
-        style={{
-          padding: 30,
-          height: "35vh",
-          width: "35vw",
-          margin: "80px auto",
-        }}
-      >
-        <h3>Welcome, {userDetails.name}</h3>
-        <h4>Your Email: {userDetails.email}</h4>
-        <h4>Your Phone Number: {userDetails.phone}</h4>
-        <Button sx={{ m: 2 }} variant="contained" color="success">
-          View Calender
-        </Button>
-        <Button sx={{ m: 2 }} variant="contained" color="success">
-          Search Doctors
-        </Button>
-      </Paper>
+      {loading ? (
+        <CircularProgress
+          sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
+        />
+      ) : (
+        <Paper
+          elevation={10}
+          style={{
+            padding: 30,
+            height: "35vh",
+            width: "35vw",
+            margin: "80px auto",
+          }}
+        >
+          <h3>Welcome, {userDetails.name}</h3>
+          <h4>Your Email: {userDetails.email}</h4>
+          <h4>Your Phone Number: {userDetails.phone}</h4>
+          <Button sx={{ m: 2 }} variant="contained" color="success">
+            View Calender
+          </Button>
+          <Button sx={{ m: 2 }} variant="contained" color="success">
+            Search Doctors
+          </Button>
+        </Paper>
+      )}
     </>
   );
 };
