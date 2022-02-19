@@ -2,8 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import axios from "axios";
+import { Paper } from "@mui/material";
 
 import Logout from "./logout";
+import AppButtonBar from "./appbar";
 
 const Dashboard = () => {
   const [userDetails, setUserDetails] = useState({});
@@ -11,7 +13,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       return navigate("/login");
     } else {
       getUserDetails();
@@ -38,15 +40,25 @@ const Dashboard = () => {
   };
 
   return (
-    <center>
-      <h2>Hello {userDetails.name}</h2>
-      <h4>Email: {userDetails.email}</h4>
-      <h4>Phone Number: {userDetails.phone}</h4>
-      <Link to="/">Go to Home</Link>
-      <br></br>
-      <br></br>
-      <Logout></Logout>
-    </center>
+    <>
+      <AppButtonBar></AppButtonBar>
+      <Paper
+        elevation={10}
+        style={{
+          padding: 30,
+          height: "35vh",
+          width: "35vw",
+          margin: "80px auto",
+        }}
+      >
+        <center>
+          <h2>Dashboard</h2>
+        </center>
+        <h3>Welcome, {userDetails.name}</h3>
+        <h4>Email: {userDetails.email}</h4>
+        <h4>Phone Number: {userDetails.phone}</h4>
+      </Paper>
+    </>
   );
 };
 

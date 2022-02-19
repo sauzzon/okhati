@@ -51,8 +51,8 @@ const Login = () => {
         style={{
           padding: 30,
           height: "45vh",
-          width: "35vw",
-          margin: "80px auto",
+          width: "30vw",
+          margin: "100px auto",
         }}
       >
         <center>
