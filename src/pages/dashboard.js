@@ -12,7 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return navigate("/login");
     } else {
       setLoading(true);
