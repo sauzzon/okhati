@@ -9,7 +9,12 @@ const Logout = () => {
     setIsLoggedIn(false);
   };
   return (
-    <Button size="small" variant="outlined" type="submit" onClick={handleClick}>
+    <Button
+      sx={{ m: 1 }}
+      variant="outlined"
+      color="inherit"
+      onClick={handleClick}
+    >
       Logout
     </Button>
   );

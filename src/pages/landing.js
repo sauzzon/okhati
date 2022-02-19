@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../context/Context";
 import Logout from "./logout";
+import ButtonAppBar from "./appbar";
 
 const Landing = () => {
   const { isLoggedIn } = useContext(Context);
 
   return (
-    <center>
+    <>
+      <ButtonAppBar></ButtonAppBar>
       {isLoggedIn && <h1>Welcome to </h1>}
       <h1>Okhati Solutions</h1>
       {isLoggedIn ? (
@@ -42,7 +44,7 @@ const Landing = () => {
           </Button>
         </>
       )}
-    </center>
+    </>
   );
 };
 
