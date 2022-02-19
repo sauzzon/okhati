@@ -4,9 +4,11 @@ import { Context } from "../context/Context";
 import axios from "axios";
 import { Paper, Button, CircularProgress } from "@mui/material";
 import AppButtonBar from "./appbar";
+import Notification from "./notification";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ type: "", msg: "" });
   const [userDetails, setUserDetails] = useState({});
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -36,13 +38,19 @@ const Dashboard = () => {
       setLoading(false);
       setUserDetails(userDetails.data.user);
     } catch (error) {
-      window.alert(error.response.data.msg);
+      setNotification({ type: "error", msg: error.response.data.msg });
     }
   };
 
   return (
     <>
       <AppButtonBar></AppButtonBar>
+      {notification.type && (
+        <Notification
+          severity={notification.type}
+          message={notification.msg}
+        ></Notification>
+      )}
       {loading ? (
         <CircularProgress
           sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}

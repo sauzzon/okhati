@@ -5,11 +5,14 @@ import TextField from "@mui/material/TextField";
 import { Button, Paper, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ButtonAppBar from "./appbar";
+import Notification from "./notification";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ type: "", msg: "" });
   const [regSuccess, setRegSuccess] = useState(false);
   const { isLoggedIn } = useContext(Context);
   const navigate = useNavigate();
@@ -18,10 +21,7 @@ const Register = () => {
     if (isLoggedIn) {
       return navigate("/");
     }
-    if (regSuccess) {
-      return navigate("/login");
-    }
-  }, [isLoggedIn, regSuccess]);
+  }, [isLoggedIn]);
 
   const [formError, setFormError] = useState({
     passwordError: "",
@@ -58,11 +58,11 @@ const Register = () => {
         config
       );
       setLoading(false);
-      window.alert(data.msg);
+      setNotification({ type: "success", msg: data.msg });
       setRegSuccess(true);
     } catch (error) {
       setLoading(false);
-      window.alert(error.response.data.msg);
+      setNotification({ type: "error", msg: error.response.data.msg });
     }
   };
 
@@ -97,10 +97,40 @@ const Register = () => {
   return (
     <>
       <ButtonAppBar></ButtonAppBar>
+      {notification.type && (
+        <Notification
+          severity={notification.type}
+          message={notification.msg}
+        ></Notification>
+      )}
       {loading ? (
         <CircularProgress
           sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
         />
+      ) : regSuccess ? (
+        <Paper
+          elevation={10}
+          style={{
+            padding: 30,
+            height: "25vh",
+            width: "30vw",
+            margin: "120px auto",
+          }}
+        >
+          <center>
+            <h2>Let's Login</h2>
+            <Button
+              sx={{ m: 2 }}
+              component={Link}
+              to="/login"
+              type="submit"
+              variant="contained"
+              color="success"
+            >
+              Login
+            </Button>
+          </center>
+        </Paper>
       ) : (
         <>
           <Paper

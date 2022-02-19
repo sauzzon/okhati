@@ -3,12 +3,14 @@ import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Button, Paper, CircularProgress } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ButtonAppBar from "./appbar";
+import Notification from "./notification";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState({ type: "", msg: "" });
   const { isLoggedIn, setIsLoggedIn } = useContext(Context);
   const navigate = useNavigate();
 
@@ -39,16 +41,23 @@ const Login = () => {
       );
       localStorage.setItem("userToken", data.token);
       setLoading(false);
+      setNotification({ type: "success", msg: "Login Successful" });
       setIsLoggedIn(true);
     } catch (error) {
       setLoading(false);
-      window.alert(error.response.data.msg);
+      setNotification({ type: "error", msg: error.response.data.msg });
     }
   };
 
   return (
     <>
       <ButtonAppBar></ButtonAppBar>
+      {notification.type && (
+        <Notification
+          severity={notification.type}
+          message={notification.msg}
+        ></Notification>
+      )}
       {loading ? (
         <CircularProgress
           sx={{ margin: "auto", position: "absolute", top: "48%", left: "48%" }}
