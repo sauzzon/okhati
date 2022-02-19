@@ -2,9 +2,10 @@ import { useEffect, useContext } from "react";
 import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ButtonAppBar from "./appbar";
 
 const Login = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(Context);
@@ -42,46 +43,55 @@ const Login = () => {
   };
 
   return (
-    <center>
-      <h2>Login to your account</h2>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          margin="normal"
-          required
-          type="email"
-          id="email"
-          label="Email Address"
-          name="email"
-        />
-        <br></br>
-        <TextField
-          margin="normal"
-          required
-          type="password"
-          id="password"
-          label="Password"
-          name="password"
-        />
-        <br></br>
-        <Button type="submit" variant="outlined">
-          Login
-        </Button>
-      </Box>{" "}
-      <br></br>
-      <h4>Not Registered Yet?</h4>
-      <Button
-        size="small"
-        component={Link}
-        to="/register"
-        type="submit"
-        variant="outlined"
+    <>
+      <ButtonAppBar></ButtonAppBar>
+
+      <Paper
+        elevation={10}
+        style={{
+          padding: 30,
+          height: "45vh",
+          width: "35vw",
+          margin: "80px auto",
+        }}
       >
-        Register Now
-      </Button>
-      <br></br>
-      <br></br>
-      <Link to="/">Go to Home</Link>
-    </center>
+        <center>
+          <h2>Login to your account</h2>
+        </center>
+        <Box component="form" onSubmit={handleSubmit}>
+          <TextField
+            margin="normal"
+            fullWidth
+            required
+            type="email"
+            id="email"
+            label="Email Address"
+            name="email"
+          />
+          <br></br>
+          <TextField
+            margin="normal"
+            fullWidth
+            required
+            type="password"
+            id="password"
+            label="Password"
+            name="password"
+          />
+          <br></br>
+          <center>
+            <Button
+              sx={{ m: 1 }}
+              type="submit"
+              variant="contained"
+              color="success"
+            >
+              Login
+            </Button>
+          </center>
+        </Box>
+      </Paper>
+    </>
   );
 };
 

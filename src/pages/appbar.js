@@ -15,7 +15,7 @@ const ButtonAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="success">
         <Toolbar>
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
             Okhati Solutions

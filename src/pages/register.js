@@ -2,8 +2,9 @@ import { useEffect, useContext, useState } from "react";
 import { Context } from "../context/Context";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Button, Paper } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import ButtonAppBar from "./appbar";
 
 import axios from "axios";
 
@@ -90,75 +91,88 @@ const Register = () => {
   };
 
   return (
-    <center>
-      <h2>Register with Us</h2>
-      <Box component="form" onSubmit={handleSubmit}>
-        <TextField
-          margin="normal"
-          required
-          id="name"
-          label="Name"
-          name="name"
-        />
-        <br></br>
-        <TextField
-          margin="normal"
-          required
-          type="email"
-          id="email"
-          label="Email Address"
-          name="email"
-        />
-        <br></br>
-        <TextField
-          margin="normal"
-          required
-          id="phone"
-          label="Phone Number"
-          name="phone"
-        />
-        <br></br>
-        <TextField
-          margin="normal"
-          required
-          type="password"
-          id="password"
-          label="Password"
-          name="password"
-          error={Boolean(formError.passwordError)}
-          helperText={formError.passwordError}
-        />
-        <br></br>
-        <TextField
-          margin="normal"
-          required
-          type="password"
-          id="cpassword"
-          label="Confirm Password"
-          name="cpassword"
-          error={Boolean(formError.cpasswordError)}
-          helperText={formError.cpasswordError}
-        />
-        <br></br>
-        <Button type="submit" variant="outlined">
-          Register
-        </Button>
-      </Box>
-      <br></br>
-      <h4>Already Registered?</h4>
-      <Button
-        size="small"
-        component={Link}
-        to="/login"
-        type="submit"
-        variant="outlined"
-      >
-        Log In
-      </Button>
-      <br></br>
-      <br></br>
-      <Link to="/">Go to Home</Link>
-    </center>
+    <>
+      <ButtonAppBar></ButtonAppBar>
+      <>
+        <Paper
+          elevation={10}
+          style={{
+            padding: 20,
+            height: "80vh",
+            width: "35vw",
+            margin: "20px auto",
+          }}
+        >
+          <center>
+            <h2>Register with Us</h2>
+          </center>
+          <Box component="form" onSubmit={handleSubmit}>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              id="name"
+              label="Name"
+              name="name"
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              type="email"
+              id="email"
+              label="Email Address"
+              name="email"
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              id="phone"
+              label="Phone Number"
+              name="phone"
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              type="password"
+              id="password"
+              label="Password"
+              name="password"
+              error={Boolean(formError.passwordError)}
+              helperText={formError.passwordError}
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              type="password"
+              id="cpassword"
+              label="Confirm Password"
+              name="cpassword"
+              error={Boolean(formError.cpasswordError)}
+              helperText={formError.cpasswordError}
+            />
+
+            <center>
+              <Button
+                sx={{ m: 1 }}
+                type="submit"
+                variant="contained"
+                color="success"
+              >
+                Register
+              </Button>
+            </center>
+          </Box>
+        </Paper>
+      </>
+    </>
   );
 };
 
